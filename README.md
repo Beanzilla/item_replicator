@@ -20,7 +20,7 @@ This mod does "work" with MineClone2. (However there is a graphical issue in the
 1. Get this repo!
 2. Drop this directory/repo into your Minetest mods folder.
 3. Edit settings.lua to your liking.
-4. Add `load_mod_item_clone = true` to your worlds world.mt file.
+4. Add `load_mod_item_replicator = true` to your worlds world.mt file.
 5. Enjoy the mod.
 
 ## A note about logging
