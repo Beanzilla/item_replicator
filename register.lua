@@ -100,11 +100,11 @@ local mod_name = "item_replicator_"
 local extent = ".png"
 local grouping = nil
 local sounding = nil
-if item_replicator_internal.game_mode() == "MCL2" then
+if item_replicator.game_mode() == "MCL2" then
     local mcl_sounds = rawget(_G, "mcl_sounds") or item_replicator_internal.throw_error("Failed to obtain MCL2 Sounds")
     grouping = {handy=1}
     sounding = mcl_sounds.node_sound_metal_defaults()
-elseif item_replicator_internal.game_mode() == "MTG" then
+elseif item_replicator.game_mode() == "MTG" then
     local default = rawget(_G, "default") or item_replicator_internal.throw_error("Failed to obtain MTG Sounds")
     grouping = {crumbly = 3}
     sounding = default.node_sound_metal_defaults()
@@ -124,7 +124,7 @@ minetest.register_node("item_replicator:replicator", {
     groups = grouping,
     sounds = sounding,
     paramtype2 = "facedir",
-    light_source = 0,
+    light_source = 1,
     drop = "item_replicator:replicator",
     on_construct = function(pos)
         local meta = minetest.get_meta(pos)
@@ -257,7 +257,7 @@ minetest.register_node("item_replicator:replicator_active", {
     groups = grouping,
     sounds = sounding,
     paramtype2 = "facedir",
-    light_source = 4,
+    light_source = 5,
     drop = "item_replicator:replicator",
     on_construct = function(pos)
         local meta = minetest.get_meta(pos)
