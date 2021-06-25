@@ -5,7 +5,7 @@ item_replicator_internal.update = function (pos, elapsed)
     local gen=inv:get_stack("gen",1):get_name() -- The item to be produced
     local process=meta:get_int("proc")
 
-    if inv:is_empty("gen") or inv:room_for_item("done",gen) == false or gen == "" then
+    if inv:is_empty("gen") or inv:room_for_item("done",gen) == false or gen == "" or gen == "item_replicator:replicator" or gen == "item_replicator:replicator_active" then
         minetest.get_node_timer(pos):stop()
         meta:set_int("proc", 0)
         meta:set_int("state", 0)
@@ -22,7 +22,7 @@ item_replicator_internal.update = function (pos, elapsed)
             meta:set_string("infotext", "Item Replicator [No Product] (" .. meta:get_string("owner") .. ")")
             reported = true
         end
-        if (item_replicator.is(gen) == false and not item_replicator_settings.allow_unknown) and not reported then
+        if ((item_replicator.is(gen) == false and not item_replicator_settings.allow_unknown) and not reported) or (gen == "item_replicator:replicator" or gen == "item_replicator:replicator_active") then
             meta:set_string("infotext", "Item Replicator [Invalid Product] (" .. meta:get_string("owner") .. ")")
             reported = true
         end

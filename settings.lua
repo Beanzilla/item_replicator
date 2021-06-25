@@ -3,10 +3,13 @@
 item_replicator_settings = {}
 
 -- Do we log the api calls? (Great for debugging issues but not so good on a long running production server)
-item_replicator_settings.log_api = true
+item_replicator_settings.log_api = false
 
 -- Do we log that items were produced? (Great for debugging issues but not so good on a long running production server)
 item_replicator_settings.log_production = true
+
+-- Do we log deep into the bowels of the replicator?
+item_replicator_settings.log_deep = false
 
 -- Testing the API (Turn these false when not testing)
 item_replicator_settings.run_test = true
