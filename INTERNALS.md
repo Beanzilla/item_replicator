@@ -1,4 +1,4 @@
-# Item Clone > Internal Assitant Functions
+# Item Replicator > Internal Assitant Functions
 
 Inside my mod I use a variety of little or big functions which help me perform some test or task with ease.
 

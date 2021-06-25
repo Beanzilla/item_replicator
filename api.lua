@@ -1,95 +1,112 @@
 -- The API
 
-function item_clone.add(itemstring, amount, time)
-    if not item_clone.is(itemstring) then
-        table.insert(item_clone_items, {itemstring, amount, time})
-        if item_clone_settings["log_api"] then
-            minetest.log("action", "[item_clone] API Add (Insert) {'"..itemstring.."', "..amount..", "..time.."}")
+function item_replicator.add(itemstring, amount, time)
+    if not item_replicator.is(itemstring) then
+        table.insert(item_replicator_items, {itemstring, amount, time})
+        if item_replicator_settings.log_api then
+            minetest.log("action", "[item_replicator] API Add (Insert) {'"..itemstring.."', "..amount..", "..time.."}")
         end
     else
-        local index = 0
-        for ind, val in pairs(item_clone_items) do
+        local index = 1
+        for ind, val in pairs(item_replicator_items) do
+            --minetest.log("action", "[item_replicator] API Add (dump) "..ind.." {'"..val[1].."', "..val[2]..", "..val[3].."}")
             if val[1] == itemstring then
                 break
             end
             index = index + 1
         end
-        item_clone_items[index] = {itemstring, amount, time}
-        if item_clone_settings["log_api"] then
-            minetest.log("action", "[item_clone] API Add (Update) {'"..itemstring.."', "..amount..", "..time.."}")
+        item_replicator_items[index] = {itemstring, amount, time}
+        if item_replicator_settings.log_api then
+            minetest.log("action", "[item_replicator] API Add (Update) {'"..itemstring.."', "..amount..", "..time.."}")
         end
     end
 end
 
-function item_clone.is(itemstring)
+function item_replicator.is(itemstring)
     local result = false
-    for ind, val in pairs(item_clone_items) do
+    for ind, val in pairs(item_replicator_items) do
         if val[1] == itemstring then
             result = true
             break
         end
     end
     if result then
-        if item_clone_settings["log_api"] then
-            minetest.log("action", "[item_clone] API Is '"..itemstring.."' == true")
+        if item_replicator_settings.log_api then
+            minetest.log("action", "[item_replicator] API Is '"..itemstring.."' == true")
         end
         return true
     end
-    if item_clone_settings["log_api"] then
-        minetest.log("action", "[item_clone] API Is '"..itemstring.."' == false")
+    if item_replicator_settings.log_api then
+        minetest.log("action", "[item_replicator] API Is '"..itemstring.."' == false")
     end
     return false
 end
 
-function item_clone.get_amount(itemstring)
-    if item_clone.is(itemstring) then
-        for ind, val in pairs(item_clone_items) do
+function item_replicator.get_amount(itemstring)
+    if item_replicator.is(itemstring) then
+        for ind, val in pairs(item_replicator_items) do
             if val[1] == itemstring then
-                if item_clone_settings["log_api"] then
-                    minetest.log("action", "[item_clone] API get_amount '"..itemstring.."' x "..val[2])
+                if item_replicator_settings.log_api then
+                    minetest.log("action", "[item_replicator] API Get Amount '"..itemstring.."' x "..val[2])
                 end
                 return val[2]
             end
         end
     end
-    if item_clone_settings["log_api"] then
-        minetest.log("action", "[item_clone] API get_amount '"..itemstring.."' was not found, return 1")
+    if not item_replicator_settings.allow_unknown then
+        if item_replicator_settings.log_api then
+            minetest.log("action", "[item_replicator] API Get Amount '"..itemstring.."' was not found, return -1")
+        end
+        return -1
+    else
+        if item_replicator_settings.log_api then
+            minetest.log("action", "[item_replicator] API Get Amount '"..itemstring.."' was not found, return "..item_replicator_settings.unknown_item_amount)
+        end
+        return item_replicator_settings.unknown_item_amount
     end
-    return 1
 end
 
-function item_clone.get_time(itemstring)
-    if item_clone.is(itemstring) then
-        for ind, val in pairs(item_clone_items) do
+function item_replicator.get_time(itemstring)
+    if item_replicator.is(itemstring) then
+        for ind, val in pairs(item_replicator_items) do
             if val[1] == itemstring then
-                if item_clone_settings["log_api"] then
-                    minetest.log("action", "[item_clone] API get_time '"..itemstring.."' @ "..val[3].." second(s)")
+                if item_replicator_settings.log_api then
+                    minetest.log("action", "[item_replicator] API Get Time '"..itemstring.."' @ "..val[3].." second(s)")
                 end
                 return val[3]
             end
         end
     end
-    if item_clone_settings["log_api"] then
-        minetest.log("action", "[item_clone] API get_time '"..itemstring.."' was not found, returning "..item_clone_settings["unknown_item_time"].." second(s)")
+    if not item_replicator_settings.allow_unknown then
+        if item_replicator_settings.log_api then
+            minetest.log("action", "[item_replicator] API Get Time '"..itemstring.."' was not found, returning -1 second(s)")
+        end
+        return -1
+    else
+        if item_replicator_settings.log_api then
+            minetest.log("action", "[item_replicator] API Get Time '"..itemstring.."' was not found, return "..item_replicator_settings.unknown_item_time)
+        end
+        return item_replicator_settings.unknown_item_time
     end
-    return item_clone_settings["unknown_item_time"]
 end
 
-function item_clone.remove(itemstring)
-    if item_clone.is(itemstring) then
-        local index = 0
-        for ind, val in pairs(item_clone_items) do
+function item_replicator.remove(itemstring)
+    if item_replicator.is(itemstring) then
+        local index = 1
+        for ind, val in pairs(item_replicator_items) do
+            --minetest.log("action", "[item_replicator] API Remove (dump) "..ind.." {'"..val[1].."', "..val[2]..", "..val[3].."}")
             if val[1] == itemstring then
                 break
             end
             index = index + 1
         end
-        table.remove(item_clone_items, index)
-        if item_clone_settings["log_api"] then
-            minetest.log("action", "[item_clone] API remove '"..itemstring.."' was removed")
+        table.remove(item_replicator_items, index)
+        if item_replicator_settings.log_api then
+            minetest.log("action", "[item_replicator] API Remove '"..itemstring.."' was removed")
         end
-    end
-    if item_clone_settings["log_api"] then
-        minetest.log("action", "[item_clone] API remove '"..itemstring.."' was not found, ignoring")
+    else
+        if item_replicator_settings.log_api then
+            minetest.log("action", "[item_replicator] API Remove '"..itemstring.."' was not found, ignoring")
+        end
     end
 end

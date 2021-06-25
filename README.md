@@ -1,6 +1,6 @@
-# Item Clone
+# Item Replicator
 
-Clone items with ease.
+Replicate items with ease.
 
 ## What's in the box
 

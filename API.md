@@ -1,4 +1,4 @@
-# Item Clone > API
+# Item Replicator > API
 
 This mod comes with an Application Programming Interface.
 
@@ -12,7 +12,7 @@ I.E.
 
 ```lua
 -- Adds 2 default:dirt_with_grass every 15 seconds
-item_clone.add("default:dirt_with_grass", 2, 15)
+item_replicator.add("default:dirt_with_grass", 2, 15)
 ```
 
 ## Is
@@ -25,12 +25,12 @@ I.E.
 
 ```lua
 -- Tests if default:dirt exists
-if item_clone.is("default:dirt") then
+if item_replicator.is("default:dirt") then
     -- Do something
 end
 
 -- Tests if default:tree does not exist
-if not item_clone.is("default:tree") then
+if not item_replicator.is("default:tree") then
     -- Do something
 end
 ```
@@ -39,18 +39,20 @@ end
 
 If the itemstring exists it will return the amount per process.
 
-> Returns settings "unknown_item_amount" if the itemstring does not exist
+> If settings "allow_unknown" is true the returns settings "unknown_item_amount",
+else returns -1 for not found
 
 I.E.
 
 ```lua
 -- Tests if defualt:dirt_with_grass produces 2 per process
-if item_clone.get_amount("default:dirt_with_grass") == 2 then
+if item_replicator.get_amount("default:dirt_with_grass") == 2 then
     -- Do something
 end
 
--- Tests if default:dirt produces 1 per process
-if item_clone.get_ammount("defualt:dirt") == 1 then
+-- Tests if default:dirt produces -1 per process (Assuming allow_unknown is false)
+-- This is an alternate way to check if the item exists (-1 means not found)
+if item_replicator.get_ammount("defualt:dirt") == -1 then
     -- Do something
 end
 ```
@@ -59,18 +61,20 @@ end
 
 If the itemstring exists it will return the number of seconds per process.
 
-> Returns settings "unknown_item_time" if the itemstring does not exist
+> If settings "allow_unknown" is true the returns settings "unknown_item_time",
+else returns -1 for not found
 
 I.E.
 
 ```lua
 -- Tests if default:dirt_with_grass processes at 15 seconds
-if item_clone.get_time("default:dirt_with_grass") == 15 then
+if item_replicator.get_time("default:dirt_with_grass") == 15 then
     -- Do something
 end
 
--- Tests if default:dirt processes at 60 seconds (Default settings set unknown items to 60 seconds, adjust if wanted)
-if item_clone.get_time("default:dirt") == 60 then
+-- Tests if default:dirt processes at -1 seconds (Assuming allow_unknown is false)
+-- This is an alternate way to check if the item exists (-1 means not found)
+if item_replicator.get_time("default:dirt") == -1 then
     -- Do something
 end
 ```
@@ -85,13 +89,13 @@ I.E.
 
 ```lua
 -- Removes the item
-item_clone.remove("defualt:dirt_with_grass")
+item_replicator.remove("defualt:dirt_with_grass")
 
 -- Then checks to ensure it's gone
-if item_clone.is("default:dirt_with_grass") then
+if item_replicator.is("default:dirt_with_grass") then
     -- error("In this case it failed to remove")
     -- Because errors are frequently used in my mod in the testing (test.lua) I built my own error function
-    item_clone_internal.throw_error("In this case it failed to remove")
+    item_replicator_internal.throw_error("In this case it failed to remove")
     -- It simply adds the error message and follows it with my mod version, attempts to identify what game you used,
     -- And promotes making an issue on my repo so I know something is broken.
 end
