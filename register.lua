@@ -98,6 +98,19 @@ end
 -- Now we use all this to make our machine
 local mod_name = "item_replicator_"
 local extent = ".png"
+local grouping = nil
+local sounding = nil
+if item_replicator_internal.game_mode() == "MCL2" then
+    local mcl_sounds = rawget(_G, "mcl_sounds") or item_replicator_internal.throw_error("Failed to obtain MCL2 Sounds")
+    grouping = {handy=1}
+    sounding = mcl_sounds.node_sound_metal_defaults()
+elseif item_replicator_internal.game_mode() == "MTG" then
+    local default = rawget(_G, "default") or item_replicator_internal.throw_error("Failed to obtain MTG Sounds")
+    grouping = {crumbly = 3}
+    sounding = default.node_sound_metal_defaults()
+else
+    grouping = {crumbly = 3, handy=1}
+end
 minetest.register_node("item_replicator:replicator", {
     description = "Item Replicator",
     tiles = {
@@ -108,7 +121,8 @@ minetest.register_node("item_replicator:replicator", {
         mod_name.."vent_off"..extent,
         mod_name.."controls_off"..extent,
     },
-    groups = {crumbly = 3},
+    groups = grouping,
+    sounds = sounding,
     paramtype2 = "facedir",
     light_source = 0,
     drop = "item_replicator:replicator",
@@ -240,9 +254,10 @@ minetest.register_node("item_replicator:replicator_active", {
         mod_name.."vent_on"..extent,
         mod_name.."controls_on"..extent,
     },
-    groups = {crumbly = 3},
+    groups = grouping,
+    sounds = sounding,
     paramtype2 = "facedir",
-    light_source = 3,
+    light_source = 4,
     drop = "item_replicator:replicator",
     on_construct = function(pos)
         local meta = minetest.get_meta(pos)
