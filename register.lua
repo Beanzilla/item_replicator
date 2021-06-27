@@ -27,7 +27,9 @@ item_replicator_internal.update = function (pos, elapsed)
             reported = true
         end
 
-        minetest.log("action", "[item_replicator] 30")
+        if item_replicator_settings.log_deep then
+            minetest.log("action", "[item_replicator] 31")
+        end
         minetest.swap_node(pos, {name ="item_replicator:replicator"})
         return false
     end
@@ -114,12 +116,12 @@ end
 minetest.register_node("item_replicator:replicator", {
     description = "Item Replicator",
     tiles = {
+        mod_name.."plate_off"..extent,
         mod_name.."plate"..extent,
-        mod_name.."plate"..extent,
-        mod_name.."vent_off"..extent,
-        mod_name.."vent_off"..extent,
-        mod_name.."vent_off"..extent,
-        mod_name.."controls_off"..extent,
+        mod_name.."plate_off"..extent,
+        mod_name.."plate_off"..extent,
+        mod_name.."plate_off"..extent,
+        mod_name.."plate_off"..extent,
     },
     groups = grouping,
     sounds = sounding,
@@ -151,7 +153,9 @@ minetest.register_node("item_replicator:replicator", {
         local owner=meta:get_string("owner")
         if listname=="gen" and meta:get_int("state") ~= 1 then
             minetest.get_node_timer(pos):start(1)
-            minetest.log("action", "[item_replicator] 140")
+            if item_replicator_settings.log_deep then
+                minetest.log("action", "[item_replicator] 157")
+            end
             minetest.swap_node(pos, {name ="item_replicator:replicator_active"})
             meta:set_int("state", 1)
         end
@@ -175,7 +179,9 @@ minetest.register_node("item_replicator:replicator", {
         local owner=meta:get_string("owner")
         if listname=="gen" and meta:get_int("state") ~= 1 then
             minetest.get_node_timer(pos):start(1)
-            minetest.log("action", "[item_replicator] 164")
+            if item_replicator_settings.log_deep then
+                minetest.log("action", "[item_replicator] 183")
+            end
             minetest.swap_node(pos, {name ="item_replicator:replicator_active"})
             meta:set_int("state", 1)
         end
@@ -207,7 +213,9 @@ minetest.register_node("item_replicator:replicator", {
         local meta = minetest.get_meta(pos)
         if to_list=="gen" and meta:get_int("state") ~= 1 then
             minetest.get_node_timer(pos):start(1)
-            minetest.log("action", "[item_replicator] 196")
+            if item_replicator_settings.log_deep then
+                minetest.log("action", "[item_replicator] 217")
+            end
             minetest.swap_node(pos, {name ="item_replicator:replicator_active"})
             meta:set_int("state", 1)
         end
@@ -247,12 +255,12 @@ minetest.register_node("item_replicator:replicator", {
 minetest.register_node("item_replicator:replicator_active", {
     description = "Item Replicator",
     tiles = {
+        mod_name.."plate_on"..extent,
         mod_name.."plate"..extent,
-        mod_name.."plate"..extent,
-        mod_name.."vent_on"..extent,
-        mod_name.."vent_on"..extent,
-        mod_name.."vent_on"..extent,
-        mod_name.."controls_on"..extent,
+        mod_name.."plate_on"..extent,
+        mod_name.."plate_on"..extent,
+        mod_name.."plate_on"..extent,
+        mod_name.."plate_on"..extent,
     },
     groups = grouping,
     sounds = sounding,
@@ -286,7 +294,9 @@ minetest.register_node("item_replicator:replicator_active", {
         local owner=meta:get_string("owner")
         if listname=="gen" and meta:get_int("state") ~= 1 then
             minetest.get_node_timer(pos):start(1)
-            minetest.log("action", "[item_replicator] 274")
+            if item_replicator_settings.log_deep then
+                minetest.log("action", "[item_replicator] 298")
+            end
             minetest.swap_node(pos, {name ="item_replicator:replicator_active"})
             meta:set_int("state", 1)
         end
@@ -310,7 +320,9 @@ minetest.register_node("item_replicator:replicator_active", {
         local owner=meta:get_string("owner")
         if listname=="gen" and meta:get_int("state") ~= 1 then
             minetest.get_node_timer(pos):start(1)
-            minetest.log("action", "[item_replicator] 298")
+            if item_replicator_settings.log_deep then
+                    minetest.log("action", "[item_replicator] 324")
+            end
             minetest.swap_node(pos, {name ="item_replicator:replicator_active"})
             meta:set_int("state", 1)
         end
@@ -342,7 +354,9 @@ minetest.register_node("item_replicator:replicator_active", {
         local meta = minetest.get_meta(pos)
         if to_list=="gen" and meta:get_int("state") ~= 1 then
             minetest.get_node_timer(pos):start(1)
-            minetest.log("action", "[item_replicator] 330")
+            if item_replicator_settings.log_deep then
+                minetest.log("action", "[item_replicator] 358")
+            end
             minetest.swap_node(pos, {name ="item_replicator:replicator_active"})
             meta:set_int("state", 1)
         end
