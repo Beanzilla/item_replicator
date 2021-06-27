@@ -77,7 +77,7 @@ item_replicator_internal.inv = function (placer, pos)
     local op=meta:get_int("open")
     local open=""
     if op==0 then
-        open="Locked"
+        open="Only U"
     elseif op==1 then
         open="Members"  
     else
@@ -117,7 +117,7 @@ minetest.register_node("item_replicator:replicator", {
     description = "Item Replicator",
     tiles = {
         mod_name.."plate_off"..extent,
-        mod_name.."plate"..extent,
+        mod_name.."plate_off"..extent,
         mod_name.."plate_off"..extent,
         mod_name.."plate_off"..extent,
         mod_name.."plate_off"..extent,
@@ -256,7 +256,7 @@ minetest.register_node("item_replicator:replicator_active", {
     description = "Item Replicator",
     tiles = {
         mod_name.."plate_on"..extent,
-        mod_name.."plate"..extent,
+        mod_name.."plate_on"..extent,
         mod_name.."plate_on"..extent,
         mod_name.."plate_on"..extent,
         mod_name.."plate_on"..extent,
