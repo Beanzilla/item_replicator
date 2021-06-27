@@ -10,6 +10,7 @@ Replicate items with ease.
 * Multi-player support
 * Security
 * Multiple Games support (This mod supports MTG and MCL2)
+* [Multiple Mods supported](mod_support.lua)
 
 ## Disclamers
 
@@ -44,3 +45,6 @@ From it's itemstring to it's amount produced per process, or even the time betwe
 It may be easier for your server to simply run with allow_unknown to be true (on).
 
 This will simply use the other settings below that (unknown_item_time, unknown_item_amount) when it encounters an unknown item.
+
+Or for those who wish to better my mod and the community using it, please consider making a Pull Request with your additions/changes.
+(See [mod_support.lua](mod_support.lua) for further details)
