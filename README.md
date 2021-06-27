@@ -48,3 +48,28 @@ This will simply use the other settings below that (unknown_item_time, unknown_i
 
 Or for those who wish to better my mod and the community using it, please consider making a Pull Request with your additions/changes.
 (See [mod_support.lua](mod_support.lua) for further details)
+
+## Mods supported
+
+* MTG default
+* MTG beds
+* MTG binoculars
+* MTG boats
+* MTG bones
+* MTG bucket
+* MTG butterflies
+* MTG carts
+* MTG doors
+* MTG dye
+* MTG farming (That is, built-in to MTG, not the extended one, just yet)
+* MTG fire
+* MTG fireflies
+* MTG flowers
+* MTG map
+* MTG screwdriver
+* MTG stairs (This may be incomplete, I tried to get everything)
+* MTG tnt
+* MTG vessels
+* MTG walls
+* MTG wool
+* MTG xpanes (This may be incomplete, I tried to get everything)
