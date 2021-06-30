@@ -2,6 +2,8 @@
 
 Replicate items with ease.
 
+[Photogalery](PHOTOS.md)
+
 ## What's in the box
 
 * [Unique API](API.md)
