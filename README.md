@@ -1,4 +1,4 @@
-# Item Replicator
+# Item Replicator [![ContentDB](https://content.minetest.net/packages/ApolloX/item_replicator/shields/downloads/)](https://content.minetest.net/packages/ApolloX/item_replicator/)
 
 Replicate items with ease.
 
