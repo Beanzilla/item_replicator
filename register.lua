@@ -9,6 +9,7 @@ item_replicator_internal.update = function (pos, elapsed)
         minetest.get_node_timer(pos):stop()
         meta:set_int("proc", 0)
         meta:set_int("state", 0)
+        item_replicator_internal.inv_update(pos) -- Update the formspec for the new percent
         if item_replicator_settings.log_deep then
             minetest.log("action", "[item_replicator] item_replicator:replicator_active at ("..pos.x..", "..pos.y..", "..pos.z..") by '"..meta:get_string("owner").."' will produce '"..gen.."' x "..item_replicator.get_amount(gen).." every "..item_replicator.get_time(gen).." second(s)") 
             minetest.log("action", "[item_replicator] stopped")
@@ -62,7 +63,8 @@ item_replicator_internal.update = function (pos, elapsed)
     meta:set_int("proc",process)
     -- Let's really use a percent rather than some made up stuff.
     local percent = ((process/item_replicator.get_time(gen)) * 100)
-    local percent_format = string.format("%.2f", percent)
+    local percent_format = string.format("%.0f", percent)
+    item_replicator_internal.inv_update(pos) -- Update the formspec for the new percent
     meta:set_string("infotext", "Item Replicator " .. percent_format  .."% (" .. meta:get_string("owner") .. ")")
     if item_replicator_settings.log_deep then
         minetest.log("action", "[item_replicator] item_replicator:replicator_active at ("..pos.x..", "..pos.y..", "..pos.z..") by '"..meta:get_string("owner").."' will produce '"..gen.."' x "..item_replicator.get_amount(gen).." every "..item_replicator.get_time(gen).." second(s)") 
@@ -71,10 +73,12 @@ item_replicator_internal.update = function (pos, elapsed)
     return true
 end
 
-item_replicator_internal.inv = function (placer, pos)
+item_replicator_internal.inv_update = function(pos)
     local meta=minetest.get_meta(pos)
+    local inv=meta:get_inventory()
     local names=meta:get_string("names")
     local op=meta:get_int("open")
+    local gen=inv:get_stack("gen",1):get_name() -- The item to be produced
     local open=""
     if op==0 then
         open="Only U"
@@ -83,8 +87,19 @@ item_replicator_internal.inv = function (placer, pos)
     else
         open="Public"
     end
+    local state = meta:get_int("state")
+    local proc = meta:get_int("proc")
+    local percentage = ""
+    if state~=0 then
+        local percent = ((proc/item_replicator.get_time(gen)) * 100)
+        local percent_format = string.format("%.0f", percent)
+        percentage = ""..percent_format.."%"
+    else
+        percentage = "0%"
+    end
     meta:set_string("formspec",
         "size[8,11]" ..
+        "label[0.3,0.3;"..minetest.formspec_escape(percentage).."]" ..
         "list[context;gen;2,0;1,1;]" ..
         "button[0,1; 1.5,1;save;Save]" ..
         "button[0,2; 1.5,1;open;" .. open .."]" ..
@@ -94,6 +109,11 @@ item_replicator_internal.inv = function (placer, pos)
         "listring[current_player;main]"  ..
         "listring[current_name;done]"
     )
+end
+
+item_replicator_internal.inv = function (placer, pos)
+    local meta=minetest.get_meta(pos)
+    item_replicator_internal.inv_update(pos)
     meta:set_string("infotext", "Item Replicator (" .. placer:get_player_name() .. ")")
 end
 
