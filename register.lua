@@ -23,19 +23,19 @@ item_replicator_internal.update = function (pos, elapsed)
             meta:set_string("infotext", "Item Replicator [No Product] (" .. meta:get_string("owner") .. ")")
             reported = true
         end
-        if ((item_replicator.is(gen) == false and not item_replicator_settings.allow_unknown) and not reported) or (gen == "item_replicator:replicator" or gen == "item_replicator:replicator_active") or item_replicator.bl_is(gen) then
+        if ((item_replicator.is(gen) == false and not item_replicator_settings.allow_unknown) and not reported) or item_replicator.bl_is(gen) then
             meta:set_string("infotext", "Item Replicator [Invalid Product] (" .. meta:get_string("owner") .. ")")
             reported = true
         end
 
         if item_replicator_settings.log_deep then
-            minetest.log("action", "[item_replicator] 31")
+            minetest.log("action", "[item_replicator] 32")
         end
         minetest.swap_node(pos, {name ="item_replicator:replicator"})
         return false
     end
     process=process+1
-    if item_replicator.is(gen) then
+    if item_replicator.is(gen) and not item_replicator.bl_is(gen) then
         if process>=item_replicator.get_time(gen) then
             process=0
             for i=1,item_replicator.get_amount(gen),1 do
@@ -47,7 +47,7 @@ item_replicator_internal.update = function (pos, elapsed)
                 minetest.log("action", "[item_replicator] item_replicator:replicator_active at ("..pos.x..", "..pos.y..", "..pos.z..") by '"..meta:get_string("owner").."' has produced '"..gen.."' x "..item_replicator.get_amount(gen))
             end
         end
-    elseif item_replicator_settings.allow_unknown then
+    elseif item_replicator_settings.allow_unknown and not item_replicator.bl_is(gen) then
         if process>=item_replicator_settings.unknown_item_time then
             process=0
             for i=1,item_replicator_settings.unknown_item_amount,1 do
@@ -73,6 +73,10 @@ item_replicator_internal.update = function (pos, elapsed)
     return true
 end
 
+-- Attempt to get the MCL formspec to build a formspec able to be shown via their stuff
+local mclform = rawget(_G, "mcl_formspec") or nil
+
+-- This formspec will auto-change if MCL detected
 item_replicator_internal.inv_update = function(pos)
     local meta=minetest.get_meta(pos)
     local inv=meta:get_inventory()
@@ -97,20 +101,42 @@ item_replicator_internal.inv_update = function(pos)
     else
         percentage = "0%"
     end
-    -- V1.3 MCL Support
-    -- This would need an if to change between the formspecs (IF the formspec is the problem)
-    meta:set_string("formspec",
-        "size[8,11]" ..
-        "label[0.3,0.3;"..minetest.formspec_escape(percentage).."]" ..
-        "list[context;gen;2,0;1,1;]" ..
-        "button[0,1; 1.5,1;save;Save]" ..
-        "button[0,2; 1.5,1;open;" .. open .."]" ..
-        "textarea[2.2,1.3;6,1.8;names;Members list (Inventory access);" .. names  .."]"..
-        "list[context;done;0,2.9;8,4;]" ..
-        "list[current_player;main;0,7;8,4;]" ..
-        "listring[current_player;main]"  ..
-        "listring[current_name;done]"
-    )
+    if item_replicator.game_mode() == "MTG" then
+        meta:set_string("formspec",
+            "size[8,11]" ..
+            "label[0.3,0.3;"..minetest.formspec_escape(percentage).."]" ..
+            "list[context;gen;2,0;1,1;]" ..
+            "button[0,1; 1.5,1;save;Save]" ..
+            "button[0,2; 1.5,1;open;" .. open .."]" ..
+            "textarea[2.2,1.3;6,1.8;names;Members List (Inventory access);" .. names  .."]"..
+            "list[context;done;0,2.9;8,4;]" ..
+            "list[current_player;main;0,7;8,4;]" ..
+            "listring[current_player;main]"  ..
+            "listring[current_name;done]"
+        )
+    elseif item_replicator.game_mode() == "MCL" and mclform ~= nil then
+        meta:set_string("formspec",
+            "size[9, 10.5]"..
+            "label[0.3,0.3;"..minetest.formspec_escape(percentage).."]"..
+            "list[context;gen;2,0;1,1;]"..
+            mclform.get_itemslot_bg(2, 0, 1, 1)..
+            "button[0,1; 1.9,1;save;Save]"..
+            "button[0,2; 1.9,1;open;" .. open .."]" ..
+            "label[2.16, 0.9;Members List (Inventory Access)]"..
+            "textarea[2.2,1.3;6,1.8;names;;" .. names  .."]"..
+            "list[context;done;0,2.9;9,3;]" ..
+            mclform.get_itemslot_bg(0, 2.9, 9, 3)..
+            "label[0,5.85;"..minetest.formspec_escape("Inventory").."]"..
+--            "list[current_player;main;0,6.5;9,4;]" ..
+--            mclform.get_itemslot_bg(0, 6.5, 9, 4)..
+		    "list[current_player;main;0,6.5;9,3;9]"..
+		    mclform.get_itemslot_bg(0,6.5,9,3)..
+		    "list[current_player;main;0,9.74;9,1;]"..
+		    mclform.get_itemslot_bg(0,9.74,9,1)..
+            "listring[current_player;main]"  ..
+            "listring[current_name;done]"
+        )
+    end
 end
 
 item_replicator_internal.inv = function (placer, pos)
@@ -159,9 +185,11 @@ minetest.register_node("item_replicator:replicator", {
         meta:set_string("names", "")
         meta:set_int("proc", 0)
         local inv = meta:get_inventory()
-        -- V1.3 MCL Support
-        -- Also will need to resize done since we'd go from 4*8 to 4*9 (Since 9 is MCL and 8 is MTG)
-        inv:set_size("done", 32)
+        if item_replicator.game_mode() == "MTG" then
+            inv:set_size("done", 32) -- 4*8
+        elseif item_replicator.game_mode() == "MCL" then
+            inv:set_size("done", 27) -- 3*9
+        end
         inv:set_size("gen", 1)
     end,
     after_place_node = function(pos, placer, itemstack)
@@ -178,7 +206,7 @@ minetest.register_node("item_replicator:replicator", {
         if listname=="gen" and meta:get_int("state") ~= 1 then
             minetest.get_node_timer(pos):start(1)
             if item_replicator_settings.log_deep then
-                minetest.log("action", "[item_replicator] 157")
+                minetest.log("action", "[item_replicator] 208")
             end
             minetest.swap_node(pos, {name ="item_replicator:replicator_active"})
             meta:set_int("state", 1)
@@ -204,7 +232,7 @@ minetest.register_node("item_replicator:replicator", {
         if listname=="gen" and meta:get_int("state") ~= 1 then
             minetest.get_node_timer(pos):start(1)
             if item_replicator_settings.log_deep then
-                minetest.log("action", "[item_replicator] 183")
+                minetest.log("action", "[item_replicator] 234")
             end
             minetest.swap_node(pos, {name ="item_replicator:replicator_active"})
             meta:set_int("state", 1)
@@ -238,7 +266,7 @@ minetest.register_node("item_replicator:replicator", {
         if to_list=="gen" and meta:get_int("state") ~= 1 then
             minetest.get_node_timer(pos):start(1)
             if item_replicator_settings.log_deep then
-                minetest.log("action", "[item_replicator] 217")
+                minetest.log("action", "[item_replicator] 268")
             end
             minetest.swap_node(pos, {name ="item_replicator:replicator_active"})
             meta:set_int("state", 1)
@@ -319,7 +347,7 @@ minetest.register_node("item_replicator:replicator_active", {
         if listname=="gen" and meta:get_int("state") ~= 1 then
             minetest.get_node_timer(pos):start(1)
             if item_replicator_settings.log_deep then
-                minetest.log("action", "[item_replicator] 298")
+                minetest.log("action", "[item_replicator] 349")
             end
             minetest.swap_node(pos, {name ="item_replicator:replicator_active"})
             meta:set_int("state", 1)
@@ -345,7 +373,7 @@ minetest.register_node("item_replicator:replicator_active", {
         if listname=="gen" and meta:get_int("state") ~= 1 then
             minetest.get_node_timer(pos):start(1)
             if item_replicator_settings.log_deep then
-                    minetest.log("action", "[item_replicator] 324")
+                    minetest.log("action", "[item_replicator] 375")
             end
             minetest.swap_node(pos, {name ="item_replicator:replicator_active"})
             meta:set_int("state", 1)
@@ -379,7 +407,7 @@ minetest.register_node("item_replicator:replicator_active", {
         if to_list=="gen" and meta:get_int("state") ~= 1 then
             minetest.get_node_timer(pos):start(1)
             if item_replicator_settings.log_deep then
-                minetest.log("action", "[item_replicator] 358")
+                minetest.log("action", "[item_replicator] 409")
             end
             minetest.swap_node(pos, {name ="item_replicator:replicator_active"})
             meta:set_int("state", 1)

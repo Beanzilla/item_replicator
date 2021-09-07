@@ -27,7 +27,7 @@ function item_replicator.game_mode()
         reported = true
         game_mode = "MTG"
     end
-    if (minetest.get_modpath("mcl_clone") or false) and not reported then
+    if (minetest.get_modpath("mcl_core") or false) and not reported then
         reported = true
         game_mode = "MCL"
     end
@@ -57,7 +57,7 @@ end
 dofile(mod_path.."/register.lua")
 
 -- If to blacklist our machine or to add it as a valid item
-if item_replicator_settings.allow_self_replication then
+if item_replicator_settings.allow_self_replication ~= true then
     item_replicator.bl_add("item_replicator:replicator")
     item_replicator.bl_add("item_replicator:replicator_active")
 else -- Make it take 5 minutes to make 1 more replicator (But you'd need 2 to get to this point)

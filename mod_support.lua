@@ -32,3 +32,7 @@ To send me a PR:
 if minetest.get_modpath("default") or false then
     dofile(mods_folder.."default.lua")
 end
+
+if minetest.get_modpath("mcl_core") or false then
+    dofile(mods_folder.."mcl_core.lua")
+end
