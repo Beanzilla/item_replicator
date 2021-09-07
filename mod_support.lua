@@ -36,3 +36,7 @@ end
 if minetest.get_modpath("mcl_core") or false then
     dofile(mods_folder.."mcl_core.lua")
 end
+
+if minetest.get_modpath("area_containers") or false then
+   dofile(mods_folder.."area_containers.lua")
+end
