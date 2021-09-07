@@ -13,6 +13,7 @@ Replicate items with ease.
 * Security
 * Multiple Games support (This mod supports MTG and MCL2)
 * [Multiple Mods supported](mod_support.lua)
+* Need [help](HELP.md)?
 
 ## Quick-Start
 
@@ -33,6 +34,8 @@ item_replicator_settings.log_api = false
 item_replicator_settings.log_production = false -- Only turn this one off if really needed
 item_replicator_settings.log_deep = false
 ```
+
+> You might also want to turn off tests (Depending on how frequent your server goes offline then starts back up again)
 
 ## A note about items
 
