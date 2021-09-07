@@ -1,5 +1,9 @@
 # Item Replicator > Help System > MCL
 
+Recipe:
+
+![craft](mcl_recipe)
+
 General Overview:
 
 ![overview](help_mcl_version.png)
@@ -18,9 +22,11 @@ Add a playername 1 per line (That's it, just 1 per line, no comma or anything el
 
 To quickly lock, unlock or open to public click the Only U button (This button will change who has access, Only U, Members, Public)
 
+> You need to save when you change access level or add/remove a player's name.
+
 What do they mean? (Access Level)
 
-* `Only U`, only you the player who as access to add/remove members, change the item to be generated and change the access level can access the replicator. (Screen shows only if you have access)
+* `Only U`, only you the player who has access to add/remove members, change the item to be generated and change the access level can access the replicator. (Screen shows only if you have access)
 * `Members`, only you the player who "owns" the replicator, and those in the Members List can access the replicator. (Members can't change the item being generated or add/remove members or change access level, only take and add to the Collection Pool)
 * `Public`, anyone can access the replicator. (only the player who "owns" the replicator can change the item being generated, add/remove members and change access level)
 
@@ -32,7 +38,7 @@ I want to make a public apple replicator on my server for everyone to use.
 
 I have a friend who what's to use my wood replicator?
 
-> I'd use a Members access level where I add my friend's playername to the Members List (don't forget to save).
+> I'd use the Members access level where I add my friend's playername to the Members List (don't forget to save).
 
 ### Collection Pool
 
