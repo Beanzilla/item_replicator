@@ -14,10 +14,6 @@ Replicate items with ease.
 * Multiple Games support (This mod supports MTG and MCL2)
 * [Multiple Mods supported](mod_support.lua)
 
-## Disclamers
-
-This mod does "work" with MineClone2. (However there is a graphical issue in the formspec which adds some difficulty in navigation)
-
 ## Quick-Start
 
 1. Get this repo!
