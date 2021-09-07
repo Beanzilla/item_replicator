@@ -26,6 +26,26 @@ This can be used to verify the API is working correctly and returns the correct 
 
 Does the mod automatically exit the game when the test is done?
 
+## Blacklist removes allowed
+
+Does the blacklist API remove an item (Thus making it unknown) for the allowed items list?
+
+This allows for code like:
+
+```lua
+ -- A full stack every 1 process (every second)
+item_replicator.add("default:dirt", 99, 1)
+
+ -- Would remove the above from the known/allowed items list with this setting true (on)
+item_replicator.bl_add("default:dirt")
+```
+
+## Allow self replication
+
+Does the mod allow the Replicator to be replicated in a replicator?
+
+Default is to not allow (false).
+
 ## Allow Unknown
 
 Does the replicator allow unknown items to be produced?

@@ -1,4 +1,4 @@
-# Item Replicator [![ContentDB](https://content.minetest.net/packages/ApolloX/item_replicator/shields/downloads/)](https://content.minetest.net/packages/ApolloX/item_replicator/)
+# Item Replicator [![ContentDB](https://content.minetest.net/packages/ApolloX/item_replicator/shields/downloads/)](https://content.minetest.net/packages/ApolloX/item_replicator/) V1.2 Mod Expansion
 
 Replicate items with ease.
 

@@ -11,6 +11,12 @@ item_replicator_settings.log_production = true
 -- Do we log deep into the bowels of the replicator?
 item_replicator_settings.log_deep = false
 
+-- Does the blacklist remove items from the allowed list if someone or mod added the item to the blacklist?
+item_replicator_settings.blacklist_removes_allowed = true
+
+-- Does the mod not allow the Replicator to be replicated by a Replicator?
+item_replicator_settings.allow_self_replication = false
+
 -- Testing the API (Turn these false when not testing)
 item_replicator_settings.run_test = true
 item_replicator_settings.exit_after_test = false

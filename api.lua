@@ -110,3 +110,71 @@ function item_replicator.remove(itemstring)
         end
     end
 end
+
+-- API for blacklist
+function item_replicator.bl_is(itemstring)
+    local result = false
+    for ind, val in pairs(item_replicator_blacklist) do
+        if val[1] == itemstring then
+            result = true
+            break
+        end
+    end
+    if result then
+        if item_replicator_settings.log_api then
+            minetest.log("action", "[item_replicator] API Black Is '"..itemstring.."' == true")
+        end
+        return true
+    end
+    if item_replicator_settings.log_api then
+        minetest.log("action", "[item_replicator] API Black Is '"..itemstring.."' == false")
+    end
+    return false
+end
+
+function item_replicator.bl_add(itemstring)
+    if not item_replicator.bl_is(itemstring) then
+        table.insert(item_replicator_blacklist, {itemstring})
+        if item_replicator_settings.log_api then
+            minetest.log("action", "[item_replicator] API Blacklist Add '"..itemstring.."' was added")
+        end
+        if item_replicator_settings.blacklist_removes_allowed and item_replicator.is(itemstring) then
+            if item_replicator_settings.log_api then
+                minetest.log("action", "[item_replicator] API Blacklist Add '"..itemstring.."' was removed from the known/allowed list")
+            end
+            item_replicator.remove(itemstring)
+        end
+    else
+        if item_replicator_settings.log_api then
+            minetest.log("action", "[item_replicator] API Blacklist Add '"..itemstring.."' was already found, ignoring")
+        end
+        -- If this gets called again do another check just in case (Not really a big deal though)
+        if item_replicator_settings.blacklist_removes_allowed and item_replicator.is(itemstring) then
+            if item_replicator_settings.log_api then
+                minetest.log("action", "[item_replicator] API Blacklist Add '"..itemstring.."' was removed from the known/allowed list")
+            end
+            item_replicator.remove(itemstring)
+        end
+    end
+end
+
+function item_replicator.bl_remove(itemstring)
+    if item_replicator.bl_is(itemstring) then
+        local index = 1
+        for ind, val in pairs(item_replicator_items) do
+            --minetest.log("action", "[item_replicator] API Remove (dump) "..ind.." {'"..val[1].."', "..val[2]..", "..val[3].."}")
+            if val[1] == itemstring then
+                break
+            end
+            index = index + 1
+        end
+        table.remove(item_replicator_blacklist, index)
+        if item_replicator_settings.log_api then
+            minetest.log("action", "[item_replicator] API Blacklist Remove '"..itemstring.."' was removed")
+        end
+    else
+        if item_replicator_settings.log_api then
+            minetest.log("action", "[item_replicator] API Blacklist Remove '"..itemstring.."' was not found, ignoring")
+        end
+    end
+end

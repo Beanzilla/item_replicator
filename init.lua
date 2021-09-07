@@ -10,10 +10,13 @@ item_replicator_internal = {}
 -- Items known to this mod
 item_replicator_items = {}
 
+-- Items known to not be allowed
+item_replicator_blacklist = {}
+
 -- My version
 function item_replicator.version()
     -- DO NOT TOUCH THIS, This lets me know what version of the code your really running
-    return "0.1 Inital"
+    return "1.2 Mod Expansion"
 end
 
 -- Attempt to detect what gamemode/game these folks are running on
@@ -26,7 +29,7 @@ function item_replicator.game_mode()
     end
     if (minetest.get_modpath("mcl_clone") or false) and not reported then
         reported = true
-        game_mode = "MCL2"
+        game_mode = "MCL"
     end
     return game_mode
 end
@@ -52,6 +55,15 @@ end
 
 -- Register the machine
 dofile(mod_path.."/register.lua")
+
+-- If to blacklist our machine or to add it as a valid item
+if item_replicator_settings.allow_self_replication then
+    item_replicator.bl_add("item_replicator:replicator")
+    item_replicator.bl_add("item_replicator:replicator_active")
+else -- Make it take 5 minutes to make 1 more replicator (But you'd need 2 to get to this point)
+    item_replicator.add("item_replicator:replicator", 1, 300)
+    item_replicator.add("item_replicator:replicator_active", 1, 300)
+end
 
 -- Mod Support
 dofile(mod_path.."/mod_support.lua")

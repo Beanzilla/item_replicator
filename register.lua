@@ -5,7 +5,7 @@ item_replicator_internal.update = function (pos, elapsed)
     local gen=inv:get_stack("gen",1):get_name() -- The item to be produced
     local process=meta:get_int("proc")
 
-    if inv:is_empty("gen") or inv:room_for_item("done",gen) == false or gen == "" or gen == "item_replicator:replicator" or gen == "item_replicator:replicator_active" then
+    if inv:is_empty("gen") or inv:room_for_item("done",gen) == false or gen == "" or item_replicator.bl_is(gen) then
         minetest.get_node_timer(pos):stop()
         meta:set_int("proc", 0)
         meta:set_int("state", 0)
@@ -23,7 +23,7 @@ item_replicator_internal.update = function (pos, elapsed)
             meta:set_string("infotext", "Item Replicator [No Product] (" .. meta:get_string("owner") .. ")")
             reported = true
         end
-        if ((item_replicator.is(gen) == false and not item_replicator_settings.allow_unknown) and not reported) or (gen == "item_replicator:replicator" or gen == "item_replicator:replicator_active") then
+        if ((item_replicator.is(gen) == false and not item_replicator_settings.allow_unknown) and not reported) or (gen == "item_replicator:replicator" or gen == "item_replicator:replicator_active") or item_replicator.bl_is(gen) then
             meta:set_string("infotext", "Item Replicator [Invalid Product] (" .. meta:get_string("owner") .. ")")
             reported = true
         end
@@ -97,6 +97,8 @@ item_replicator_internal.inv_update = function(pos)
     else
         percentage = "0%"
     end
+    -- V1.3 MCL Support
+    -- This would need an if to change between the formspecs (IF the formspec is the problem)
     meta:set_string("formspec",
         "size[8,11]" ..
         "label[0.3,0.3;"..minetest.formspec_escape(percentage).."]" ..
@@ -122,8 +124,8 @@ local mod_name = "item_replicator_"
 local extent = ".png"
 local grouping = nil
 local sounding = nil
-if item_replicator.game_mode() == "MCL2" then
-    local mcl_sounds = rawget(_G, "mcl_sounds") or item_replicator_internal.throw_error("Failed to obtain MCL2 Sounds")
+if item_replicator.game_mode() == "MCL" then
+    local mcl_sounds = rawget(_G, "mcl_sounds") or item_replicator_internal.throw_error("Failed to obtain MCL Sounds")
     grouping = {handy=1}
     sounding = mcl_sounds.node_sound_metal_defaults()
 elseif item_replicator.game_mode() == "MTG" then
@@ -157,6 +159,8 @@ minetest.register_node("item_replicator:replicator", {
         meta:set_string("names", "")
         meta:set_int("proc", 0)
         local inv = meta:get_inventory()
+        -- V1.3 MCL Support
+        -- Also will need to resize done since we'd go from 4*8 to 4*9 (Since 9 is MCL and 8 is MTG)
         inv:set_size("done", 32)
         inv:set_size("gen", 1)
     end,

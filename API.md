@@ -15,6 +15,25 @@ I.E.
 item_replicator.add("default:dirt_with_grass", 2, 15)
 ```
 
+# Bl(acklist) Add
+
+Inserts the itemstring to the blacklist. (And if blacklist_removes_allowed is true also will remove it from allowed/known list)
+
+The blacklist can be used to control/limit what can be replicated (by default the mod includes itself to prevent replicators replicating more replicators)
+
+> Returns nothing
+
+I.E.
+
+```lua
+-- Prevents default:dirt from being replicated
+item_replicator.bl_add("default:dirt")
+
+-- And lets assume default:sand was in the known/allowed list
+-- Again with blacklist_removes_allowed == true (on) will not be in the allowed/known list
+item_replicator.bl_add("default:sand") -- Now it's not allowed to be replicated and it's not in the known/allowed list.
+```
+
 ## Is
 
 Does the itemstring exist?
@@ -31,6 +50,28 @@ end
 
 -- Tests if default:tree does not exist
 if not item_replicator.is("default:tree") then
+    -- Do something
+end
+```
+
+## Bl(acklist) Is
+
+Does the itemstring exist in the blacklist?
+
+The blacklist is mainly used to prevent particular items from being replicated for a variety of reasons.
+
+> Returns true if the itemstring does, else false.
+
+I.E.
+
+```lua
+-- Tests if default:dirt exists in the blacklist
+if item_replicator.bl_is("default:dirt") then
+    -- Do something
+end
+
+-- Tests if default:tree does not exist in the blacklist
+if not item_replicator.bl_is("default:tree") then
     -- Do something
 end
 ```
@@ -98,5 +139,25 @@ if item_replicator.is("default:dirt_with_grass") then
     item_replicator_internal.throw_error("In this case it failed to remove")
     -- It simply adds the error message and follows it with my mod version, attempts to identify what game you used,
     -- And promotes making an issue on my repo so I know something is broken.
+end
+```
+
+## Bl(acklist) Remove
+
+If the itemstring exists it will remove it from the blacklist.
+
+The blacklist is mainly used to prevent particular items from being replicated for a variety of reasons.
+
+> Returns nothing
+
+I.E.
+
+```lua
+-- Removes the item from blacklist
+item_replicator.bl_remove("default:dirt")
+
+-- Then checks to ensure it's gone from the blacklist
+if item_replicator.bl_is("default:dirt") then
+    -- error("In this case it failed to remove")
 end
 ```
