@@ -1,3 +1,4 @@
+local S = minetest.get_translator("item_replicator")
 
 item_replicator_internal.update = function (pos, elapsed)
     local meta=minetest.get_meta(pos)
@@ -163,6 +164,9 @@ else
 end
 minetest.register_node("item_replicator:replicator", {
     description = "Item Replicator",
+    _doc_items_long_desc = S("Replicators are technology from the future, they can replicate items so long as one has at least one of that item."),
+    _dock_items_usagehelp = S("Place the item wished to be replicated on the very top slot, collect resources below, or add players (1 per line) to allow others and change to Members."),
+    _dock_items_hidden=false,
     tiles = {
         mod_name.."plate_off"..extent,
         mod_name.."plate_off"..extent,
