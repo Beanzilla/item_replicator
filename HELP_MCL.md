@@ -2,7 +2,7 @@
 
 Recipe:
 
-![craft](mcl_recipe)
+![craft](mcl_recipe.png)
 
 General Overview:
 
