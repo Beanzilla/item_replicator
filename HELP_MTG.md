@@ -2,7 +2,7 @@
 
 Recipe:
 
-![craft](mtg_recipe)
+![craft](mtg_recipe.png)
 
 General Overview:
 
