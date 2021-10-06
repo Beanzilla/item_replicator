@@ -470,17 +470,19 @@ if item_replicator_settings.craft then
             }
         })
     end
-    minetest.register_craft({
-        type = "fuel",
-        recipe = "item_replicator:replicator",
-        burntime = 300
-    })
-    minetest.register_craft({
-        type = "fuel",
-        recipe = "item_replicator:replicator_active",
-        burntime = 300
-    })
 end
+
+-- Allow a "recycle" feature
+minetest.register_craft({
+    type = "fuel",
+    recipe = "item_replicator:replicator",
+    burntime = 300
+})
+minetest.register_craft({
+    type = "fuel",
+    recipe = "item_replicator:replicator_active",
+    burntime = 300
+})
 
 -- For those who don't want an active replicator in their inventory. (Looks only)
 minetest.register_craft({
