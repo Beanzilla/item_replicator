@@ -1,14 +1,19 @@
 -- Test file for the API
 minetest.log("action", "[item_replicator] Test: ....")
 
--- Get the original settings
+-- This allows me to make a copy of the settings without getting the values hosed up (thanks to lua defaulting to reference)
+item_replicator_settings.copy = function (something)
+    return something
+end
+
+-- Get the original settings (This appears to result in corrupt data, i.e. it doesn't actually work right, want copy gettting ref)
 local old_settings = {}
-old_settings.log_api = item_replicator_settings.log_api
-old_settings.log_production = item_replicator_settings.log_production
-old_settings.allow_unknown = item_replicator_settings.allow_unknown
-old_settings.unknown_item_amount = item_replicator_settings.unknown_item_amount
-old_settings.unknown_item_time = item_replicator_settings.unknown_item_time
-old_settings.blacklist_removes_allowed = item_replicator_settings.blacklist_removes_allowed
+old_settings.log_api = item_replicator_settings.copy(item_replicator_settings.log_api)
+old_settings.log_production = item_replicator_settings.copy(item_replicator_settings.log_production)
+old_settings.allow_unknown = item_replicator_settings.copy(item_replicator_settings.allow_unknown)
+old_settings.unknown_item_amount = item_replicator_settings.copy(item_replicator_settings.unknown_item_amount)
+old_settings.unknown_item_time = item_replicator_settings.copy(item_replicator_settings.unknown_item_time)
+old_settings.blacklist_removes_allowed = item_replicator_settings.copy(item_replicator_settings.blacklist_removes_allowed)
 
 -- Set the stuff to a good known value
 item_replicator_settings.log_api = true
@@ -69,6 +74,7 @@ item_replicator.bl_remove("default:sand")
 if item_replicator.bl_is("default:sand") then
     item_replicator_internal.throw_error("item_replicator.bl_remove('default:sand' did not remove!")
 end
+item_replicator.bl_remove("default:dirt")
 
 -- Restore settings
 item_replicator_settings.log_api = old_settings.log_api
