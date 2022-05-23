@@ -49,7 +49,7 @@ dofile(mod_path.."/settings.lua")
 dofile(mod_path.."/api.lua")
 
 -- Execute an API check
-if item_replicator_settings["run_test"] then
+if item_replicator_settings.run_test == true then
     dofile(mod_path.."/test.lua")
 end
 
