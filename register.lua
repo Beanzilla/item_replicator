@@ -650,7 +650,7 @@ minetest.register_node("item_replicator:replicator1", {
         local meta = minetest.get_meta(pos)
         meta:set_string("owner", (placer:get_player_name() or ""))
         local inv = meta:get_inventory()
-        item_replicator_internal.inv(placer,pos)
+        item_replicator_internal.inv1(placer,pos)
     end,
     allow_metadata_inventory_put = function(pos, listname, index, stack, player)
         local meta=minetest.get_meta(pos)
@@ -792,7 +792,7 @@ minetest.register_node("item_replicator:replicator1_active", {
             meta:set_string("owner", placer:get_player_name() or "")
         end
         local inv = meta:get_inventory()
-        item_replicator_internal.inv(placer,pos)
+        item_replicator_internal.inv1(placer,pos)
     end,
     allow_metadata_inventory_put = function(pos, listname, index, stack, player)
         local meta=minetest.get_meta(pos)
@@ -939,7 +939,7 @@ minetest.register_node("item_replicator:replicator2", {
         local meta = minetest.get_meta(pos)
         meta:set_string("owner", (placer:get_player_name() or ""))
         local inv = meta:get_inventory()
-        item_replicator_internal.inv(placer,pos)
+        item_replicator_internal.inv2(placer,pos)
     end,
     allow_metadata_inventory_put = function(pos, listname, index, stack, player)
         local meta=minetest.get_meta(pos)
@@ -1081,7 +1081,7 @@ minetest.register_node("item_replicator:replicator2_active", {
             meta:set_string("owner", placer:get_player_name() or "")
         end
         local inv = meta:get_inventory()
-        item_replicator_internal.inv(placer,pos)
+        item_replicator_internal.inv2(placer,pos)
     end,
     allow_metadata_inventory_put = function(pos, listname, index, stack, player)
         local meta=minetest.get_meta(pos)
