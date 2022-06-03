@@ -1216,7 +1216,7 @@ if item_replicator_settings.craft then
         type = "cooking",
         output = "item_replicator:replicator1",
         recipe = "item_replicator:replicator",
-        cooktime = 395
+        cooktime = 375 -- You get 25 seconds off if it's not active
     })
     -- IR Active to IRV2
     minetest.register_craft({
@@ -1230,7 +1230,7 @@ if item_replicator_settings.craft then
         type = "cooking",
         output = "item_replicator:replicator2",
         recipe = "item_replicator:replicator1",
-        cooktime = 495
+        cooktime = 475 -- You get 25 seconds off if it's not active
     })
     -- IRV2 Active to IRV3
     minetest.register_craft({

@@ -49,3 +49,9 @@ This could be used as a small chest... but really it's for stuff being made.
 ### Your Inventory
 
 Yup, that be your inventory, the inventory of the current player accessing the replicator. (Nothing special there)
+
+### Upgrading
+
+You can stick it into a furnace with a lot of fuel and wait for it to be upgraded to version 2 (which simply increases the speed at which it can replicate things) and stick a version 2 into a furnace again to upgrade it to version 3 (which simply increases the speed again).
+
+> You can dispose of item replicators by putting them in the fuel slot (bottom slot) of a furnace to be used as fuel, or in the case of upgrading them you put them in the cook slot (top slot) of the furnace to be cooked into their upgraded version. (Currently Version 3 is the highest upgraded version)
