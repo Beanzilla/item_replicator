@@ -1,4 +1,4 @@
-# Item Replicator [![ContentDB](https://content.minetest.net/packages/ApolloX/item_replicator/shields/downloads/)](https://content.minetest.net/packages/ApolloX/item_replicator/) V1.2 Mod Expansion
+# Item Replicator [![ContentDB](https://content.minetest.net/packages/ApolloX/item_replicator/shields/downloads/)](https://content.minetest.net/packages/ApolloX/item_replicator/) V2.0 Serious Replication
 
 Replicate items with ease.
 
@@ -11,7 +11,7 @@ Replicate items with ease.
 * [Settings](SETTINGS.md)
 * Multi-player support
 * Security
-* Multiple Games support (This mod supports MTG and MCL2)
+* Multiple Games support (This mod supports MTG and MCL)
 * [Multiple Mods supported](mod_support.lua)
 * Need [help](HELP.md)?
 
@@ -22,6 +22,8 @@ Replicate items with ease.
 3. Edit settings.lua to your liking.
 4. Add `load_mod_item_replicator = true` to your worlds world.mt file.
 5. Enjoy the mod.
+
+> You can use Item Replicators as fuel or you can upgrade them by cooking them. (Each "upgrade" boasts even faster replication)
 
 ## A note about logging
 

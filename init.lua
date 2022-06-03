@@ -16,7 +16,7 @@ item_replicator_blacklist = {}
 -- My version
 function item_replicator.version()
     -- DO NOT TOUCH THIS, This lets me know what version of the code your really running
-    return "1.2 Mod Expansion"
+    return "2.0 Serious Replication"
 end
 
 -- Attempt to detect what gamemode/game these folks are running on
@@ -60,10 +60,16 @@ dofile(mod_path.."/register.lua")
 if item_replicator_settings.allow_self_replication ~= true then
     item_replicator.bl_add("item_replicator:replicator")
     item_replicator.bl_add("item_replicator:replicator_active")
-else -- Make it take 5 minutes to make 1 more replicator (But you'd need 2 to get to this point)
-    item_replicator.add("item_replicator:replicator", 1, 300)
-    item_replicator.add("item_replicator:replicator_active", 1, 300)
+else -- Make it take a long time to make 1 more replicator (But you'd need 2 to get to this point)
+    item_replicator.add("item_replicator:replicator", 1, 350)
+    item_replicator.add("item_replicator:replicator_active", 1, 350)
 end
+
+-- Don't allow V2 or V3 to be replicated
+item_replicator.bl_add("item_replicator:replicator1")
+item_replicator.bl_add("item_replicator:replicator1_active")
+item_replicator.bl_add("item_replicator:replicator2")
+item_replicator.bl_add("item_replicator:replicator2_active")
 
 -- Mod Support
 dofile(mod_path.."/mod_support.lua")
