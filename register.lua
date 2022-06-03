@@ -772,7 +772,7 @@ minetest.register_node("item_replicator:replicator1_active", {
     groups = grouping,
     sounds = sounding,
     paramtype2 = "facedir",
-    light_source = 5,
+    light_source = 6,
     drop = "item_replicator:replicator1",
     on_construct = function(pos)
         local meta = minetest.get_meta(pos)
@@ -917,7 +917,7 @@ minetest.register_node("item_replicator:replicator2", {
     groups = grouping,
     sounds = sounding,
     paramtype2 = "facedir",
-    light_source = 1,
+    light_source = 2,
     drop = "item_replicator:replicator2",
     on_construct = function(pos)
         local meta = minetest.get_meta(pos)
@@ -1061,7 +1061,7 @@ minetest.register_node("item_replicator:replicator2_active", {
     groups = grouping,
     sounds = sounding,
     paramtype2 = "facedir",
-    light_source = 5,
+    light_source = 7,
     drop = "item_replicator:replicator2",
     on_construct = function(pos)
         local meta = minetest.get_meta(pos)
