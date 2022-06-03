@@ -40,3 +40,7 @@ end
 if minetest.get_modpath("area_containers") or false then
    dofile(mods_folder.."area_containers.lua")
 end
+
+if minetest.get_modpath("currency") or false then
+   dofile(mods_folder.."currency.lua")
+end
