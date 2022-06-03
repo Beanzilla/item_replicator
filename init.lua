@@ -16,7 +16,7 @@ item_replicator_blacklist = {}
 -- My version
 function item_replicator.version()
     -- DO NOT TOUCH THIS, This lets me know what version of the code your really running
-    return "2.0 Serious Replication"
+    return "2.1 Currency Support"
 end
 
 -- Attempt to detect what gamemode/game these folks are running on
