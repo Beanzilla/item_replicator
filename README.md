@@ -1,4 +1,4 @@
-# Item Replicator [![ContentDB](https://content.minetest.net/packages/ApolloX/item_replicator/shields/downloads/)](https://content.minetest.net/packages/ApolloX/item_replicator/) V2.0 Serious Replication
+# Item Replicator [![ContentDB](https://content.minetest.net/packages/ApolloX/item_replicator/shields/downloads/)](https://content.minetest.net/packages/ApolloX/item_replicator/) V2.1 Currency Support
 
 Replicate items with ease.
 
@@ -76,3 +76,6 @@ Or for those who wish to better my mod and the community using it, please consid
 * MTG walls
 * MTG wool
 * MTG xpanes (This may be incomplete, I tried to get everything)
+* MCL (As best as I can, I tried to get everything)
+* area_containers
+* currency
