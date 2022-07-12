@@ -44,3 +44,7 @@ end
 if minetest.get_modpath("currency") or false then
    dofile(mods_folder.."currency.lua")
 end
+
+if minetest.get_modpath("tardis_new") or false then
+   dofile(mods_folder.."tardis_new.lua")
+end
